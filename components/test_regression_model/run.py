@@ -2,6 +2,7 @@
 """
 This step takes the best model, tagged with the "prod" tag, and tests it against the test dataset
 """
+import os
 import argparse
 import logging
 import wandb
@@ -25,6 +26,7 @@ def go(args):
     # Download input artifact. This will also log that this script is using this
     # particular version of the artifact
     model_local_path = run.use_artifact(args.mlflow_model).download()
+    model_local_path = os.path.join(model_local_path, './')
 
     # Download test dataset
     test_dataset_path = run.use_artifact(args.test_dataset).file()
