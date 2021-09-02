@@ -35,6 +35,10 @@ def go(args):
     idx = df['price'].between(min_price, max_price)
     df = df[idx].copy()
 
+    logger.info("Dropping data not located in NYC")
+    idx2 = df['longitude'].between(-74.25, -73.50) & df['latitude'].between(40.5, 41.2)
+    df = df[idx2].copy()
+
     logger.info("Converting last_review data to datetime")
     df['last_review'] = pd.to_datetime(df['last_review'])
 
